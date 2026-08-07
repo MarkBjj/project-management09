@@ -1,4 +1,4 @@
-import ProjectsSidebar from "./components/ProjectsSidebar";
+import ProjectsSidebar from "./components/ProjectsSideBar";
 import BoxContent from "./components/BoxContent";
 function App() {
   return (
