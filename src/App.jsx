@@ -1,8 +1,11 @@
+import ProjectsSidebar from "./components/ProjectsSidebar";
+import BoxContent from "./components/BoxContent";
 function App() {
   return (
-    <>
-      <h1 className="my-8 text-center text-5xl font-bold">Hello World</h1>
-    </>
+    <main className="flex h-screen w-screen my-8 bg-gray-100">
+      <ProjectsSidebar />
+      <BoxContent />
+    </main>
   );
 }
 
