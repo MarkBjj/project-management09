@@ -1,6 +1,6 @@
 import NoImage from "../assets/no-projects.png";
 import Button from "./Buttons.jsx";
-export default function NoProjectSelected() {
+export default function NoProjectSelected({ onStartAddProject })  {
   return (
     <div className="mt-20 mr-2 text-center flex-1 min-w-0 bg-stone-400 p-4 rounded-md">
       <img
@@ -12,9 +12,9 @@ export default function NoProjectSelected() {
       <p className="text-stone-600 text-sm mb-2">
         Please select a project from the sidebar or create a new project.
       </p>
-      <p className="mt-8">
-        <Button>Create New</Button>
-      </p>
+      <div className="mt-8 flex justify-center">
+        <Button onClick={onStartAddProject}>Create New</Button>
+      </div>
     </div>
   );
 }
