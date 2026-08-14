@@ -22,11 +22,29 @@ function App() {
     });
   }
 
+  //ADD new project, called from NewProject once the form is saved
+  function handleAddProject(projectData) {
+    setProjectState((prevState) => {
+      const newProject = { ...projectData, id: Math.random().toString() };
+      return {
+        ...prevState,
+        selectedProjectId: undefined,
+        // spread creates a new array (don't mutate state) with newProject appended at the end
+        // and not losing the previous projects in the array
+        projects: [...prevState.projects, newProject],
+      };
+    });
+  }
+  //test to see if the new project is being added to the projects array in state
+  console.log("projects array in state:", projectState.projects);
+
   //var for which component to show in the main content area
   let content;
   if (projectState.selectedProjectId === null) {
-    content = <NewProject />;
+    //adding a new project, show the NewProject component
+    content = <NewProject onAdd={handleAddProject} />;
   } else if (projectState.selectedProjectId === undefined) {
+    //no project selected, show the NoProjectSelected component
     content = <NoProjectSelected onStartAddProject={handleStartAddProject} />;
   } else {
     content = <div>Project Content</div>;
@@ -34,7 +52,11 @@ function App() {
 
   return (
     <main className="flex h-screen w-full gap-4 bg-gray-200">
-      <ProjectsSidebar onStartAddProject={handleStartAddProject} />
+      {/* //LIST the projects array in the sidebar, and pass the onStartAddProject */}
+      <ProjectsSidebar
+        onStartAddProject={handleStartAddProject}
+        projects={projectState.projects}
+      />
       {/*output var content in the main content area */}
       {content}
     </main>
