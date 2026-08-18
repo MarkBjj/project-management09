@@ -7,9 +7,7 @@ export default function ProjectsSideBar({ onStartAddProject, projects }) {
         My Project List
       </h3>
 
-      <div className="w-[14rem] bg-transparent p-4">
-        <Button onClick={onStartAddProject}>NEW Project</Button>
-      </div>
+      <Button onClick={onStartAddProject}>NEW Project</Button>
       <ul>
         {projects.map((project) => (
           <li key={project.id}>

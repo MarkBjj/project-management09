@@ -15,6 +15,16 @@ export default function NewProject({ onAdd }) {
       // form validation...
     };
 
+    // form validation - check empty fields
+    if (
+      titleRef.current.value.trim() === "" ||
+      descriptionRef.current.value.trim() === "" ||
+      dueDateRef.current.value.trim() === ""
+    ) {
+      // display error message or handle invalid input
+      return;
+    }
+
     // LIFT values back to App.jsx because the projects[] state is there, and we want to update it from here
     onAdd(newProject);
   }
