@@ -3,6 +3,7 @@ import ProjectsSidebar from "./components/ProjectsSideBar";
 import NewProject from "./components/NewProject";
 import NoProjectSelected from "./components/NoProjectSelected";
 import { useState } from "react";
+import { SelectedProject } from "./components/SelectedProject";
 function App() {
   //which component to show in the main content area
   const [projectState, setProjectState] = useState({
@@ -34,6 +35,30 @@ function App() {
     });
   }
 
+  //DELETE project button handler - remove from projects[]
+  function handleDeleteProject() {
+    setProjectState((prevState) => {
+      return {
+        ...prevState,
+        selectedProjectId: undefined,
+        //filter out the currently selected project from the projects array
+        projects: prevState.projects.filter(
+          (project) => project.id !== prevState.selectedProjectId,
+        ),
+      };
+    });
+  }
+
+  //project DETAILS button handler
+  function handleSelectProject(id) {
+    setProjectState((prevState) => {
+      return {
+        ...prevState,
+        selectedProjectId: id,
+      };
+    });
+  }
+
   //ADD new project, called from NewProject once the form is saved
   function handleAddProject(projectData) {
     setProjectState((prevState) => {
@@ -50,18 +75,32 @@ function App() {
   //test to see if the new project is being added to the projects array in state
   console.log("projects array in state:", projectState.projects);
 
+  const selectedProject = projectState.projects.find(
+    (project) => project.id === projectState.selectedProjectId,
+  );
   //var for which component to show in the main content area
-  let content;
+  let content = (
+    <SelectedProject project={selectedProject} onDelete={handleDeleteProject} />
+  );
+  // selectedProjectId is explicitly set to null by handleStartAddProject
+  // when the "NEW Project" button is clicked, so show the creation form
   if (projectState.selectedProjectId === null) {
-    //adding a new project, show the NewProject component
     content = (
       <NewProject onAdd={handleAddProject} onCancel={handleCancelAddProject} />
     );
+    // selectedProjectId is undefined in the initial state and after
+    // handleCancelAddProject resets it, meaning no project is chosen yet
   } else if (projectState.selectedProjectId === undefined) {
-    //no project selected, show the NoProjectSelected component
     content = <NoProjectSelected onStartAddProject={handleStartAddProject} />;
+    // any other value is a real project id set by handleSelectProject,
+    // so render the matching project's full details
   } else {
-    content = <div>Project Content</div>;
+    content = (
+      <SelectedProject
+        project={selectedProject}
+        onDelete={handleDeleteProject}
+      />
+    );
   }
 
   return (
@@ -69,6 +108,7 @@ function App() {
       {/* //LIST the projects array in the sidebar, and pass the onStartAddProject */}
       <ProjectsSidebar
         onStartAddProject={handleStartAddProject}
+        onSelectProject={handleSelectProject}
         projects={projectState.projects}
         className="mt-8"
       />
