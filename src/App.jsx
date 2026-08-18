@@ -70,6 +70,7 @@ function App() {
       <ProjectsSidebar
         onStartAddProject={handleStartAddProject}
         projects={projectState.projects}
+        className="mt-8"
       />
       {/*output var content in the main content area */}
       {content}

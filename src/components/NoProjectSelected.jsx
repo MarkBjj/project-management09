@@ -1,8 +1,8 @@
 import NoImage from "../assets/no-projects.png";
 import Button from "./Buttons.jsx";
-export default function NoProjectSelected({ onStartAddProject })  {
+export default function NoProjectSelected({ onStartAddProject }) {
   return (
-    <div className="mt-20 mr-2 text-center flex-1 min-w-0 bg-stone-400 p-4 rounded-md">
+    <div className="mt-12 mr-2 text-center flex-1 min-w-0 bg-stone-400 p-4 rounded-md">
       <img
         src={NoImage}
         alt="No Project Selected"
