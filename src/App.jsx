@@ -22,6 +22,18 @@ function App() {
     });
   }
 
+  //add CANCEL button
+  function handleCancelAddProject() {
+    //update project state
+    setProjectState((prevState) => {
+      return {
+        ...prevState,
+        //null means that we are adding a new project
+        selectedProjectId: undefined,
+      };
+    });
+  }
+
   //ADD new project, called from NewProject once the form is saved
   function handleAddProject(projectData) {
     setProjectState((prevState) => {
@@ -42,7 +54,9 @@ function App() {
   let content;
   if (projectState.selectedProjectId === null) {
     //adding a new project, show the NewProject component
-    content = <NewProject onAdd={handleAddProject} />;
+    content = (
+      <NewProject onAdd={handleAddProject} onCancel={handleCancelAddProject} />
+    );
   } else if (projectState.selectedProjectId === undefined) {
     //no project selected, show the NoProjectSelected component
     content = <NoProjectSelected onStartAddProject={handleStartAddProject} />;
