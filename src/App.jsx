@@ -9,7 +9,39 @@ function App() {
   const [projectState, setProjectState] = useState({
     selectedProjectId: undefined,
     projects: [],
+    tasks: [],
   });
+
+  // ADD New Task function handler - called from NewTask.jsx when the "Add Task" button is clicked
+  function handleAddTask(text, taskData) {
+    setProjectState((prevState) => {
+      const taskId = Math.random().toString();
+      //create NEW task Object with the new task data, including the projectId and a unique id
+      const newTask = {
+        ...taskData,
+        projectId: prevState.selectedProjectId,
+        id: taskId,
+        text: text,
+      };
+      // add new task to the tasks array in state, and also add it to the tasks array of the selected project
+      return {
+        ...prevState,
+        // find the selected project and add the new task to its tasks array
+        tasks: [...prevState.tasks, newTask],
+      };
+    });
+  }
+
+  //DELETE Task button handler - remove from tasks[]
+  function handleDeleteTask(taskId) {
+    setProjectState((prevState) => {
+      return {
+        ...prevState,
+        // remove the task from the flat tasks array
+        tasks: prevState.tasks.filter((task) => task.id !== taskId),
+      };
+    });
+  }
 
   //ADD new project But handler
   function handleStartAddProject() {
@@ -79,9 +111,7 @@ function App() {
     (project) => project.id === projectState.selectedProjectId,
   );
   //var for which component to show in the main content area
-  let content = (
-    <SelectedProject project={selectedProject} onDelete={handleDeleteProject} />
-  );
+  let content;
   // selectedProjectId is explicitly set to null by handleStartAddProject
   // when the "NEW Project" button is clicked, so show the creation form
   if (projectState.selectedProjectId === null) {
@@ -99,6 +129,11 @@ function App() {
       <SelectedProject
         project={selectedProject}
         onDelete={handleDeleteProject}
+        onAddTask={handleAddTask}
+        onDeleteTask={handleDeleteTask}
+        tasks={projectState.tasks.filter(
+          (task) => task.projectId === projectState.selectedProjectId,
+        )}
       />
     );
   }
