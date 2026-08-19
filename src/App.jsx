@@ -33,12 +33,12 @@ function App() {
   }
 
   //DELETE Task button handler - remove from tasks[]
-  function handleDeleteTask(taskId) {
+  function handleDeleteTask(id) {
     setProjectState((prevState) => {
       return {
         ...prevState,
         // remove the task from the flat tasks array
-        tasks: prevState.tasks.filter((task) => task.id !== taskId),
+        tasks: prevState.tasks.filter((task) => task.id !== id),
       };
     });
   }
@@ -131,6 +131,7 @@ function App() {
         onDelete={handleDeleteProject}
         onAddTask={handleAddTask}
         onDeleteTask={handleDeleteTask}
+        onSelectedProjectId={projectState.selectedProjectId}
         tasks={projectState.tasks.filter(
           (task) => task.projectId === projectState.selectedProjectId,
         )}

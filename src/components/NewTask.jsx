@@ -5,7 +5,7 @@ import { useState } from "react";
 // input is currently uncontrolled/does not reset after submit).
 export default function NewTask({ tasks, onDelete, onAdd }) {
   // Holds whatever the user has typed so far.
-  const [enteredTask, setEnteredTask] = useState();
+  const [enteredTask, setEnteredTask] = useState("");
 
   // Fired on every keystroke; syncs state with the input's current value.
   function handleChange(event) {
@@ -13,6 +13,10 @@ export default function NewTask({ tasks, onDelete, onAdd }) {
   }
 
   function handleClick() {
+    // Ignore empty/whitespace-only input.
+    if (enteredTask.trim() === "") {
+      return;
+    }
     // Call the onAddTask prop function, passing the current task title.
     onAdd(enteredTask);
     // Clear the input field after adding the task.
