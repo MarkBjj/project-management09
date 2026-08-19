@@ -9,7 +9,7 @@ export function SelectedProject({ project, onDelete }) {
     },
   );
   return (
-    <div className="w-[35rem] mt-16 mr-2 text-center flex-1 min-w-0 bg-stone-400 p-4 rounded-md">
+    <div className="w-[35rem] mt-16 mr-2 text-left flex-1 min-w-0 bg-stone-400 p-4 rounded-md">
       <header className="border-b-2 border-stone-600 pb-4 mb-4">
         <div className="flex items-center justify-between">
           <h3 className="text-stone-700 text-xl font-bold my-2">
